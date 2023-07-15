@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %} ASL | HOME {% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="text-center">
+            <img src="https://itida.gov.eg/PublishingImages/logo/FWD.png" class="img-fluid" width="600px">
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-8 border-right">
+                <form class="mt-5" method="post">
+                    {% csrf_token %}
+                    <div class="form-group purple-border green-border-focus">
+                        <textarea class="form-control" id="id_textarea" name="name_textarea" rows="7" style="resize: none"
+                                  placeholder="Type your word here..."></textarea>
+                    </div>
+                    <button type="submit" value="Translate" class="btn btn-primary btn-lg"><i class="fas fa-hands-asl-interpreting"></i>
+                        Translate
+                    </button>
+                    <button type="submit" value="Record" class="btn btn-success btn-lg"><i class="fa-solid fa-microphone-lines"></i>
+                        Record
+                    </button>
+                </form>
+            </div>
+
+            {% load static %}
+            <div class="col-md-4 container-fluid">
+                {% if valid is 1 %}
+                    <p class="display-4 text-center"> {{ word }}</p>
+                    <video autoplay muted loop class="mt-1 w-100 ">
+                        <source src="{% static path_to_word %}" type="video/mp4">
+                    </video>
+
+                {% elif valid is 2 %}
+                    <p class="lead text-center">Do you mean <a href="{% url 'translate_word' word %} ">{{ word }}</a> ? </p>
+
+                {% else %}
+                    <img class="w-100 mt-5" src="{% static 'img/asl.jpg' %}" alt="logo">
+
+                {% endif %}
+
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+
+
